@@ -1,7 +1,8 @@
-# v3.2-M3SR-MambaIRv2-E4
+# v3.2-M3SR-MambaIRv2-E5
 
 UDR-MambaSR：RGB routing ambiguity 与 Depth reliability 双条件控制的单次 late residual correction，用于 RGB + Depth → RGB ×4 超分辨率。Depth 不修改 RGB routing、sorting、Delta、A/B/C 或 selective scan。
 
+- [E5 固定 E4 的八种 Depth 因果干预、测试命令与判据](docs/E5_GUIDE.md)
 - [E4 最佳 E2 uncertainty + 最佳 E3 local alpha 组合、训练、五组消融与测试命令](docs/E4_GUIDE.md)
 - [E3 局部 alpha 实验、四档正则、训练与测试命令](docs/E3_GUIDE.md)
 - [E2 U1/U2/U3 uncertainty 实验、训练与测试命令](docs/E2_GUIDE.md)
@@ -11,7 +12,9 @@ UDR-MambaSR：RGB routing ambiguity 与 Depth reliability 双条件控制的单�
 - [用户提供的完整方案](docs/UDR_MambaSR_SPEC.md)
 - [本地验证记录与未验证项](docs/UDR_VERIFICATION.md)
 
-当前 E4 通过实测报告选择 E2 uncertainty 与 E3 局部 alpha，严格合并权重后再训练，形成 `F' = F_RGB + A_D U_R C_D R_D`。五组消融与四因子审计命令见 [E4 指南](docs/E4_GUIDE.md)。尚无 E2/E3 实测结果，因此不会预设胜出变体或填入 E4 性能。
+当前 E5 固定一份训练完成的 E4 权重，仅在推理时分别输入正确、零、常数、空间打乱、其他图像、同均值方差噪声、强模糊、边缘 Depth；以匹配随机路由种子的五数据集 PSNR/SSIM 和四项机制量检验 Depth 的几何因果作用。E5 不新增训练，完整命令见 [E5 指南](docs/E5_GUIDE.md)。
+
+以下为 E4 的历史实验说明：E4 通过实测报告选择 E2 uncertainty 与 E3 局部 alpha，严格合并权重后再训练，形成 `F' = F_RGB + A_D U_R C_D R_D`。五组消融与四因子审计命令见 [E4 指南](docs/E4_GUIDE.md)。尚无 E2/E3 实测结果，因此不会预设胜出变体或填入 E4 性能。
 
 以下为 E3 的历史实验说明：E3 只把 E0 的全局 alpha 替换为单通道空间自适应局部 alpha，不叠加 E2 uncertainty。四档 `lambda_A` 分别进行 30k Phase A 与 100k Phase B 训练。完整命令见 [E3 指南](docs/E3_GUIDE.md)。
 
